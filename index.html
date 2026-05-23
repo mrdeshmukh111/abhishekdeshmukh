@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Professional Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            cursor: none;
+        }
+        
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #E24B4A;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(226, 75, 74, 0.5);
+            transition: transform 0.1s ease-out;
+        }
+        
+        .cursor-dot {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #E24B4A;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            left: 0;
+            top: 0;
+            transform: translate(-50%, -50%);
+        }
+        
+        .cursor-trail {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: rgba(226, 75, 74, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9997;
+        }
+        
+        a, button, input, textarea, select {
+            cursor: none;
+        }
+        
+        .navbar {
+            background: white;
+            border-bottom: 2px solid #ddd;
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: #E24B4A;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #E24B4A;
+        }
+        
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 24px;
+            color: #E24B4A;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .hero p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: 2px solid #E24B4A;
+            background: white;
+            color: #E24B4A;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: none;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .btn:hover {
+            background: #E24B4A;
+            color: white;
+        }
+        
+        .btn-primary {
+            background: #E24B4A;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+        
+        .expertise-section {
+            background: white;
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #333;
+        }
+        
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+        
+        .expertise-card {
+            padding: 2rem;
+            background: #f9f9f9;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .expertise-card:hover {
+            border-color: #E24B4A;
+            transform: translateY(-4px);
+        }
+        
+        .expertise-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #E24B4A;
+            border-radius: 12px 12px 0 0;
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        
+        .expertise-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .expertise-icon {
+            font-size: 28px;
+            margin-bottom: 1rem;
+        }
+        
+        .expertise-card h3 {
+            font-size: 18px;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .expertise-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .methodology-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .methodology-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+        
+        .methodology-card:hover {
+            border-color: #E24B4A;
+            box-shadow: 0 4px 12px rgba(226, 75, 74, 0.1);
+        }
+        
+        .methodology-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #E24B4A;
+        }
+        
+        .methodology-list {
+            list-style: none;
+        }
+        
+        .methodology-list li {
+            padding: 0.5rem 0;
+            color: #666;
+            font-size: 14px;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .methodology-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: #E24B4A;
+            font-weight: bold;
+        }
+        
+        .tools-section {
+            background: white;
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tool-badge {
+            padding: 1rem;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            transition: all 0.3s;
+        }
+        
+        .tool-badge:hover {
+            border-color: #E24B4A;
+            background: rgba(226, 75, 74, 0.05);
+        }
+        
+        .footer {
+            background: white;
+            border-top: 1px solid #ddd;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            color: #666;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .social-links a {
+            text-decoration: none;
+            color: #666;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .social-links a:hover {
+            color: #E24B4A;
+        }
+        
+        .badge-accent {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(226, 75, 74, 0.1);
+            color: #E24B4A;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">SECURITY.PRO</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#expertise">Expertise</a></li>
+                <li><a href="#methodology">Methodology</a></li>
+                <li><a href="#tools">Tools</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero" id="about">
+        <h1>Penetration Testing & Digital Forensics</h1>
+        <div class="hero-subtitle">Identifying vulnerabilities. Securing systems.</div>
+        <p>Professional pentester specializing in comprehensive security assessments across web applications, APIs, mobile platforms, and network infrastructure. I provide detailed vulnerability analysis and actionable remediation strategies using industry-standard methodologies and cutting-edge tools.</p>
+        <div class="cta-buttons">
+            <button class="btn btn-primary" onclick="alert('Contact: your-email@example.com')">Request Assessment</button>
+            <button class="btn" onclick="alert('Case studies coming soon!')">View Case Studies</button>
+        </div>
+    </section>
+
+    <section class="expertise-section" id="expertise">
+        <div class="section-container">
+            <h2 class="section-title">Core Expertise Areas</h2>
+            <div class="expertise-grid">
+                <div class="expertise-card">
+                    <div class="expertise-icon">🌐</div>
+                    <h3>Web VAPT</h3>
+                    <p>Comprehensive vulnerability assessment and penetration testing of web applications including OWASP Top 10, injection attacks, authentication bypass, and business logic flaws.</p>
+                    <div class="badge-accent">Specialized</div>
+                </div>
+                
+                <div class="expertise-card">
+                    <div class="expertise-icon">🔌</div>
+                    <h3>API VAPT</h3>
+                    <p>REST and GraphQL API security testing, authentication mechanisms, rate limiting, input validation, and data exposure vulnerabilities.</p>
+                    <div class="badge-accent">Specialized</div>
+                </div>
+                
+                <div class="expertise-card">
+                    <div class="expertise-icon">📱</div>
+                    <h3>Mobile VAPT</h3>
+                    <p>iOS and Android application security assessment, reverse engineering, local storage vulnerabilities, secure communication testing, and malware analysis.</p>
+                    <div class="badge-accent">Specialized</div>
+                </div>
+                
+                <div class="expertise-card">
+                    <div class="expertise-icon">🏢</div>
+                    <h3>Network VAPT</h3>
+                    <p>Infrastructure penetration testing, network reconnaissance, vulnerability scanning, wireless security, and privilege escalation techniques.</p>
+                    <div class="badge-accent">Specialized</div>
+                </div>
+                
+                <div class="expertise-card">
+                    <div class="expertise-icon">🔍</div>
+                    <h3>Digital Forensics</h3>
+                    <p>Incident response, evidence collection, data recovery, log analysis, and forensic investigation for malware analysis and breach investigation.</p>
+                    <div class="badge-accent">Specialized</div>
+                </div>
+                
+                <div class="expertise-card">
+                    <div class="expertise-icon">📊</div>
+                    <h3>Security Reporting</h3>
+                    <p>Detailed vulnerability reports, risk assessment, compliance documentation, remediation roadmaps, and stakeholder presentations.</p>
+                    <div class="badge-accent">Professional</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="methodology-section" id="methodology">
+        <h2 class="section-title">Testing Methodologies</h2>
+        <div class="methodology-grid">
+            <div class="methodology-card">
+                <h3 class="methodology-title">OWASP</h3>
+                <ul class="methodology-list">
+                    <li>OWASP Top 10</li>
+                    <li>OWASP Testing Guide</li>
+                    <li>API Security Top 10</li>
+                    <li>Mobile Security Testing</li>
+                </ul>
+            </div>
+            
+            <div class="methodology-card">
+                <h3 class="methodology-title">Industry Standards</h3>
+                <ul class="methodology-list">
+                    <li>PTES (Penetration Testing)</li>
+                    <li>NIST Guidelines</li>
+                    <li>CIS Controls</li>
+                    <li>ISO 27001/27002</li>
+                </ul>
+            </div>
+            
+            <div class="methodology-card">
+                <h3 class="methodology-title">Assessment Phases</h3>
+                <ul class="methodology-list">
+                    <li>Reconnaissance</li>
+                    <li>Scanning & Enumeration</li>
+                    <li>Vulnerability Analysis</li>
+                    <li>Exploitation & Validation</li>
+                    <li>Reporting</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="tools-section" id="tools">
+        <div class="section-container">
+            <h2 class="section-title">Tools & Technologies</h2>
+            <div class="tools-grid">
+                <div class="tool-badge">Burp Suite</div>
+                <div class="tool-badge">OWASP ZAP</div>
+                <div class="tool-badge">Metasploit</div>
+                <div class="tool-badge">Nmap</div>
+                <div class="tool-badge">Wireshark</div>
+                <div class="tool-badge">Frida</div>
+                <div class="tool-badge">Postman</div>
+                <div class="tool-badge">SQLmap</div>
+                <div class="tool-badge">John the Ripper</div>
+                <div class="tool-badge">Hashcat</div>
+                <div class="tool-badge">Volatility</div>
+                <div class="tool-badge">Autopsy</div>
+                <div class="tool-badge">Ghidra</div>
+                <div class="tool-badge">IDA Pro</div>
+                <div class="tool-badge">Snort/Suricata</div>
+                <div class="tool-badge">Empire</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#">LinkedIn</a>
+                <a href="#">GitHub</a>
+                <a href="#">Twitter</a>
+                <a href="#">Email</a>
+            </div>
+            <p>&copy; 2024 Security Professional. All rights reserved.</p>
+            <p style="font-size: 12px; margin-top: 1rem; color: #999;">Authorized security testing only. Responsible disclosure always.</p>
+        </div>
+    </footer>
+
+    <script>
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        let mouseX = 0;
+        let mouseY = 0;
+        let cursorX = 0;
+        let cursorY = 0;
+        const trailElements = [];
+        const maxTrails = 12;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            // Animate cursor circle with slight delay
+            setTimeout(() => {
+                cursorX = mouseX;
+                cursorY = mouseY;
+                cursor.style.left = cursorX + 'px';
+                cursor.style.top = cursorY + 'px';
+            }, 8);
+
+            // Instant dot
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
+
+            // Create trail effect
+            if (Math.random() > 0.8) {
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                trail.style.left = mouseX + 'px';
+                trail.style.top = mouseY + 'px';
+                document.body.appendChild(trail);
+
+                setTimeout(() => {
+                    trail.style.opacity = '0';
+                    trail.style.transition = 'opacity 0.5s ease-out';
+                }, 10);
+
+                setTimeout(() => {
+                    trail.remove();
+                }, 600);
+            }
+        });
+
+        document.addEventListener('mouseenter', () => {
+            cursor.style.opacity = '1';
+            cursorDot.style.opacity = '1';
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+            cursorDot.style.opacity = '0';
+        });
+
+        // Add hover effect to interactive elements
+        const interactiveElements = document.querySelectorAll('a, button, input, textarea, select');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursor.style.borderColor = '#E24B4A';
+                cursor.style.boxShadow = '0 0 20px rgba(226, 75, 74, 0.8)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursor.style.boxShadow = '0 0 10px rgba(226, 75, 74, 0.5)';
+            });
+        });
+    </script>
+</body>
+</html>
